@@ -55,6 +55,8 @@ Prometheus
 Happy-path сценарій - 
 JSON -
 Аспектно Орієнтовне Програмування - 
+
+CPU - 
 # вступ
 
 робота скіпає моніторинг для бізнес та секьюріті.
@@ -262,23 +264,23 @@ process_open_handles 566
 У арсеналі сучасних підходів до логування так само існує Аспектно Орієнтовне Програмування, що дозволяє робити логування вхідних параметрів та результуючих значень автоматично, приховано від очей того, хто досліджує кодову базу, аби зменшити когнітивне навантаження на нього. reference https://ayende.com/blog/3474/logging-the-aop-way
 
 ###### Метрики
-Metrics are a numeric representation of data measured over intervals of time. Metrics can harness the power of mathematical modeling and prediction to derive knowledge of the behavior of a system over intervals of time in the present and future.
 
-Since numbers are optimized for storage, processing, compression, and retrieval, metrics enable longer retention of data as well as easier querying. This makes metrics perfectly suited to building dashboards that reflect historical trends. Metrics also allow for gradual reduction of data resolution. After a certain period of time, data can be aggregated into daily or weekly frequency.
+Метрики є цифровою репрезентацією даних, які були виміряні за певний період часу. Вони дозволяють застосовувати математичне моделювання та статистику, аби передбачувати поведінку системи, що дає додаткову інформацію, яка впливає на рішення розробників, які підтримують систему.
 
-Advantages of Metrics over Event Logs
-By and large, the biggest advantage of metrics-based monitoring over logs is that unlike log generation and storage, metrics transfer and storage has a constant overhead. Unlike logs, the cost of metrics doesn’t increase in lockstep with user traffic or any other system activity that could result in a sharp uptick in data.
+Зважаючи на те, що метрики є вже певною мірою опрацьованими даними, то це дозволяє легко будувати дашборди, базуючись на них, адже ці дашборди будуть репрезентативними для розуміння історичних трендів, іншими словами - того що ставалося із системою напротязі певного періоду часу. 
+
+Гарним прикладом метрик можуть бути завантаженість CPU, кількість пам'яті, що виділяється на систему, або кількість активних потоків. Приклад метрик, що збираються, наведено в розділах ... та ..., де в останньому додатково описується імплементація підходу, що дозволяє збирати метрики.
+
 ###### Трейси
-
-One of the most challenging aspects of highly distributed workloads is understanding the interplay between different components and isolating responsibility when attempting root cause analysis. Since a single request might touch dozens of small programs to generate a response, it can be difficult to interpret where bottlenecks or performance changes originate. To provide better information about how each component contributes to latency and processing overhead, a technique called distributed tracing has emerged.
-
-Distributed tracing is an approach to instrumenting systems that works by adding code to each component to illuminate the request processing as it traverses your services. Each request is given a unique identifier at the edge of your infrastructure that is passed along as the task traverses your infrastructure. Each service then uses this ID to report errors and the timestamps for when it first saw the request and when it handed it off to the next stage. By aggregating the reports from components using the request ID, a detailed path with accurate timing data can be traced through your infrastructure.
-
-This method can be used to understand how much time is spent on each part of a process and clearly identify any serious increases in latency. This extra instrumentation is a way to adapt metrics collection to large numbers of processing components. When mapped visually with time on the x axis, the resulting display shows the relationship between different stages, how long each process ran, and the dependency relationship between events that must run in parallel. This can be incredibly useful in understanding how to improve your systems and how time is being spent.
+Одним з найбільш складних аспектів в розподілених системах, де існує велика кількість компонентів, є розуміння того, як усі компоненти співпрацюють один з одним. Особливо важливим це стає при відлагодженні системи, адже, базуючись на існуючих даних (логах, метриках) необхідно ізолювати частину системи, що є джерелом інциденту. Зважаючи на те, що кожен запит може проходити через деяку кількість підсистем, аби виконати свою роботу, це є когнітивно складно для людини розуміти весь ланцюжок залежностей. Аби зняти це когнітивне навантаження з розробників та користувачів моніторингових систем, цей процес був автоматизований. Результатом такої автоматизації є розподілене трасування (Distributed Tracing). 
+Розподілене трасування це підхід до інструментації підсистем таким чином, що запит, проходячи через різні підсистеми, наповнюється метаданими, що репрезентують його шлях між ними. Кожен запит має унікальний ідентифікатор, який зчитується в різних підсистемах, а також доповнюється таким чином, що може показати шлях запиту та кількість часу, що він провів в кожній підсистемі.
+Кінцевим результатом, що отримується за рахунок такого підходу є візуалізація, що показана на рисунку ...
 
 https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/assets/dsob_0404.png
 Figure 4-4. A trace represented as spans: span A is the root span, span B is a child of span A
 
+Така графічна візуалізація робить проблему ідентифікації та ізоляції проблеми тривіальною, адже є очевидним, де запит проводить найбільше часу, та де це не очікується.
+Так само, така графічна візуалізація легко показує зв'язок між залежностями, що є частиною життєвого циклу запиту у розподіленій системі.
 
 ###### Реалізовуючи компоненти моніторингу
 Кожна з цих частин необхідна, аби розподілена система стала оглядовою. Відповідно, це необхідно імплементувати. 
@@ -320,6 +322,8 @@ reference Distributed Systems Observability by Cindy Sridharan https://www.oreil
 Пропоноване покращення в стабільності: 0.09%
 Прибуток, який приносить система: 1 млн. дол.
 Фінансова цінність покращення: 1 млн. дол. * 0.0009 = 900$
+
+^ в таблицю.
 
 В цьому випадку, якщо вартість створення запропонованого покращення буде менша за 900$, то це має сенс імплементувати. Якщо вартість покращення буде вищою за 900$, то вартість покращення буде вищою за інвестицію, відповідно прибуток не збільшиться. Зазвичай, вартість такого покращення буде надзвичайно високою, адже покращення саме на верхній межі є найдорожчими з точки зору ресурсів необхідних на імплементацію.  
 
