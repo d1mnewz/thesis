@@ -139,6 +139,7 @@ More robust tooling and instrumentation is required to ensure good working order
 
 Є також сучасні дослідження, які розкривають аспекти моніторингу, що є прикладними до сьогодення, описуючи інструменти та підходи, що вже використовуються серед розробників систем. Гарним прикладом такого дослідження є "On Observability and Monitoring of Distributed Systems – An Industry Interview Study" від Sina Niedermaier, Falko Koetter, Andreas Freymann, Stefan Wagner. Такі дослідження менше фокусуються на фундаментальних концепціях, натякаючи, що читачі вже знайомі з усією термінологією, а основою дослідження є прикладні історії та висновки з індустрії.  
 
+https://arxiv.org/pdf/1907.12240.pdf
 To provide context to the survey described in this work, the related work investigates (1) current approaches to bridging the gap between distributed system
 complexity and monitoring capability as well as (2) preceding surveys regarding
 monitoring and observability (see Figure 1).
@@ -288,11 +289,22 @@ https://docs.microsoft.com/en-us/azure/azure-monitor/app/media/devops/0050.png
 ###### Реалізовуючи компоненти моніторингу
 TODO:
 Кожна з цих частин необхідна, аби розподілена система стала оглядовою. Відповідно, це необхідно імплементувати. 
+Опис необхідної інфраструктури:
+.NET App
+Prometheus
+	describe what is prometheus, origins, usage, metrics
+Prometheus configuration
+Prometheus scrapper
+Docker-compose to aggregate
+	Docker, Docker-compose, each line in file. 
 
 reference Distributed Systems Observability by Cindy Sridharan https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/ch04.html#:~:text=Logs%2C%20metrics%2C%20and%20traces%20are,the%20three%20pillars%20of%20observability.
 
 
 ###### Візуалізовуючи результати моніторингу
+
+базуючись на прикладі з Prometheus описати доступні візуальні частини в Prometheus UI.
+
 // TODO:
 - візуалізація
 	- з роками, моніторинг системи еволюціонували і створили власні мови для маніпуляції даними та презентації їх в вигляді графів, чартів, сповіщень, дашбордів.   
@@ -301,7 +313,7 @@ reference Distributed Systems Observability by Cindy Sridharan https://www.oreil
 		- лог агрегація і пошук  
 	- імпл - Ажуре, ELK, AWS, тощо
 		- цікаво, але для розподіленої системи оптимальним є використати систему для моніторингу, яка, в свою чергу, теж є розподіленою. розгляньмо приклад ELK stack  
-		- як готувати обсервабліті в Ажуре 
+		- як готувати обсервабліті в Ажуре
 
 Які є способи візуалізації даних, що можуть оптимаьно презентувати моніторингові дані:
 - Гістограми
