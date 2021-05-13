@@ -291,12 +291,16 @@ TODO:
 Кожна з цих частин необхідна, аби розподілена система стала оглядовою. Відповідно, це необхідно імплементувати. 
 Опис необхідної інфраструктури:
 .NET App
+	full code
 Prometheus
 	describe what is prometheus, origins, usage, metrics
 Prometheus configuration
+	yaml
 Prometheus scrapper
+	code sample
 Docker-compose to aggregate
-	Docker, Docker-compose, each line in file. 
+	Docker, Docker-compose, each line in file.
+	yaml
 
 reference Distributed Systems Observability by Cindy Sridharan https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/ch04.html#:~:text=Logs%2C%20metrics%2C%20and%20traces%20are,the%20three%20pillars%20of%20observability.
 
