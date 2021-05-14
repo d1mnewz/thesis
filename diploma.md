@@ -58,7 +58,8 @@ JSON -
 Аспектно Орієнтовне Програмування - 
 
 CPU - 
-Кешування - 
+Кешування -
+Apache License 2.0 - 
 # вступ
 
 TODO:
@@ -266,21 +267,30 @@ https://docs.microsoft.com/en-us/azure/azure-monitor/app/media/devops/0050.png
 TODO: рисунок
 
 ###### Реалізовуючи компоненти моніторингу
-TODO:
-Кожна з цих частин необхідна, аби розподілена система стала оглядовою. Відповідно, це необхідно імплементувати. 
-Опис необхідної інфраструктури:
-.NET App
+
+Кожна з описаних вище компонентів необхідна, аби розподілена система стала оглядовою. Це було зроблено в розробленій нами програмі, яка покликана показати практичні приклади використання моніторингу в розподілених системах в контексті превентивної безпеки. 
+В розробленій програмі було використано такі технології як .NET Core, Docker, Docker-Compose, Prometheus, Kibana, ElasticSearch та Logstash. Кожен з цих компонентів відповідає за певну частину моніторингу.
+
+.NET Core консольний додаток є ...
 	full code
-Prometheus
-Prometheus: Prometheus is an open source monitoring solution originally developed by SoundCloud. It is widely used to store and query “time-series data,” which is data that describes actions over time. Prometheus is often combined with other tools, especially Grafana, to visualize the time series data and to provide dashboards.
-	describe what is prometheus, origins, usage, metrics
-Prometheus configuration
-	yaml
-Prometheus scrapper
-	code sample
+
 Docker-compose to aggregate
-	Docker, Docker-compose, each line in file.
-	yaml
+https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/docker-compose.yml#L1
+Docker, Docker-compose, each line in file.
+yaml
+
+Prometheus - це моніторингове рішення з відкритим кодом, що широко застосовується для збору, обробки та презентації даних пов'язаних з метриками. Першочергово, це рішення було розробленим в компанії SoundCloud, а згодом його зробили доступним для загального користування за ліцензією Apache License 2.0. 
+Для того щоб розгорнути Prometheus у відповідному середовищі було використано Docker-Compose як найоптимальніший спосіб для швидкого розгортання, що не залежить від стану середовища.  
+У наступних додатках можна побачити конфігураційні файли для Prometheus, що виконані на мові YAML. Ці конфігураційні файли впливають на те, як буде розгорнутим Prometheus та якою буде його поведінка у середовищі.
+
+https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/docker-compose.yml#L11
+Додаток х. 
+https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/prometheus/prometheus.yml#L1
+Додаток х. 
+https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/prometheus/alert.yml#L1
+Додаток х. alert.yml визначає, які сповіщення Prometheus мусить відслідковувати і повідомляти користувачам, якщо такі стануться. 
+
+ELK
 
 reference Distributed Systems Observability by Cindy Sridharan https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/ch04.html#:~:text=Logs%2C%20metrics%2C%20and%20traces%20are,the%20three%20pillars%20of%20observability.
 
@@ -298,7 +308,10 @@ reference Distributed Systems Observability by Cindy Sridharan https://www.oreil
 	- імпл - Ажуре, ELK, AWS, тощо
 		- цікаво, але для розподіленої системи оптимальним є використати систему для моніторингу, яка, в свою чергу, теж є розподіленою. розгляньмо приклад ELK stack  
 		- як готувати обсервабліті в Ажуре
-
+	
+Рисунок. 
+Дослідивши даний графік, вже можна зробити висновки, що програма не є стабільною, адже очевидними є падіння в графіку, що репрезентують вимкнення програми.
+Так само, варто наголосити на тому, що графік показує лінійний ріст вимірюваної метрики.
 Які є способи візуалізації даних, що можуть оптимаьно презентувати моніторингові дані:
 - Гістограми
 - Граф
