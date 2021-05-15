@@ -97,39 +97,23 @@ TODO:
 - Гетерогенність систем, адже вони можуть складатися з кількох рівнів  - код, що виконує бізнес-сценарії, інфраструктурні технології такі як Docker контейнери, віртуальні машини, або навіть serverless функції. Більше того, команди для таких систем також можуть бути гетерогенними. В той час, коли таке середовище може культивувати іновації, дозволяючи різним командам вибирати різні технології для своїх частин системи, з іншого боку це ж і створює проблематику для консистентного підходу до моніторингу таких систем.
 
 Відповідно, відслідковування трендів, та огляд розподілених обчислень й систем є важливою проблемою ще з ранніх часів розподілених систем. [Cooper and Marzullo, 1991].  
-TODO:
-Already in the late 1980s, Joyce et al. [Joyce et al., 1987] identified five issues
-in monitoring distributed systems, in an early attempt to characterize the key
-constraints that distinguish monitoring in sequential settings from monitoring
-in distributed systems:
-(C1) The fact that distributed systems have many foci of control;
-(C2) The presence of communication delays among nodes, which makes it difficult to determine a system’s state at any given time;
-(C3) The inherent non-determinism in distributed and asynchronous systems;
-(C4) The fact that monitoring a distributed system alters its behavior ;
-(C5) The complexity of the interactions between the system and the system
-developer.
-
-
+Ще в 1987 Joyce [Joyce et al., 1987] ідентифікував п'ять аспектів в моніториннгу розподілених систем, що зараз можна вважати ранньою спробою виділити характеристики основних проблем, що відрізняють моніторинг монолітних систем від розподілених систем.
+Ось ці аспекти:
+- Розподілені системи мають набагато більше точок, де можна контролювати їх. В деяких ситуаціях, настільки багато, що це видається заледве реалістичним охопити усі.
+- Існування недетерміністичної затримки у комунікації між частинами розподіленої системи, адже це унеможливлює детерміністичні твердження про стан системи в даний момент часу
+- Унаслідуваний нон-детермінізм від визначення розподілених та асинхронних систем
+- Моніторинг розподілених систем змінює їхню поведінку. Подібне явище описане у контексті фізики - ефект спостерігача. https://en.wikipedia.org/wiki/Observer_effect_(physics)
+- Складність інтеракції між системою та розробниками системи.
 
 (референс на https://www.researchgate.net/publication/3282450_Monitoring_distributed_systems )
 
-TODO:
-Чому так сталося? Відповідь на це питання досить проста, хоч і складається з кількох факторів, що зійшлись разом:
-- Доступність 
-	- Контейнери, Docker, Kubernetes, дешевий Cloud Computing 
-- 
-The growing popularity of cloud computing, big data clusters, and instance orchestration layers has forced operations professionals to rethink how to design monitoring at scale and tackle unique problems with better instrumentation. 
+Розглядаючи питання доступності розподілених систем та їхньої популярності, варто згадати про усі інструменти, що стають доступними з технічним прогресом.
+Одним з фундаментальних інструментів є Docker, що дозволяє ізолювати роботу програмного продукту, що, в свою чергу, забезпечує більше детермінізму при переносі Docker image (що є програмним артефактом) у інше середовище.
+Так само, варто згадати постійно-ростучу популярність хмарних рішень, які значно полегшують старт програмних продуктів. За своєю суттю, хмарні рішення є презентацією розподіленої системи, адже рішення є створеними за допомогою комбінування окремих компонентів. Якщо до ранніх 2010-х років хмарні обчислення були занадто недоступними через ціну, то зараз вони є настільки дешевими, що є набагато вигіднішими, аніж власні дата-центри.
+Тим не менше, ростуча популярність хмарних обчислень, великих даних, оркестраторів змусила переосмилювати моделювання моніторингу розподілених систем, адже самі розподілені системи змінились. Основною зміною було розділяти систему на набагато менші, більш конкретні підсистеми. Така зміна має прямий вплив на те, що треба моніторити, адже збільшує кількість компонентів, що варто моніторити. В кінці кінців, така кількість компонентів може лише створювати великі об'єми інформаційного шуму замість цінних даних. 
 
-TODO:
-In order to model and mirror the systems it watches, monitoring infrastructure has always been somewhat distributed. However, many modern development practices—including designs around microservices, containers, and interchangeable, ephemeral compute instances—have changed the monitoring landscape dramatically.
-
-Тим не менше, з тим як розподілені системи стають все більш поширеними серед розробників та тих, хто проектує системи, постала логічна потреба в моніторингу таких систем, адже кожен розробник та менеджер хочуть мати якомога більше розуміння та контролю над такою системою задля покращення її якостей. Тому, за такими системами необхідно слідкувати у всіх стадіях їхнього життєвого циклу - від розробки до щоденної підтримки production системи. 
-TODO:
-The monitoring system in this case takes on a central role in controlling the environment and deciding when to take action.
-
-the tendency for modern architectures to divide up work and functionality between many smaller, discrete components. These designs can have a direct impact on the monitoring landscape because they make clarity and comprehensibility especially valuable but increasingly elusive.
-
-More robust tooling and instrumentation is required to ensure good working order. However, because the responsibility for completing any given task is fragmented and split between different workers (potentially on many different physical hosts), understanding where responsibility lies for performance issues or errors can be difficult. Requests and units of work that touch dozens of components, many of which are selected from pools of possible candidates, can make request path visualization or root cause analysis impractical using traditional mechanisms.
+З тим як розподілені системи стають все більш поширеними серед розробників та тих, хто проектує системи, постала логічна потреба в моніторингу таких систем, адже кожен розробник та менеджер хочуть мати якомога більше розуміння та контролю над такою системою задля покращення її якостей. Тому, за такими системами необхідно слідкувати у всіх стадіях їхнього життєвого циклу - від розробки до щоденної підтримки production системи. 
+А із тим як змінюється область застосування моніторингу мусять змінюватись й інструменти, адже їхні цілі лишаються незмінними - зрозуміти, де знаходяться проблеми з продуктивністю, звідки беруться помилки, вчасно ідентифікувати інцидент, сповістити розробників розподіленої системи, тощо.
 
 # основна частина
 ## Дотичні дослідження
