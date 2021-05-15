@@ -134,7 +134,47 @@ https://www.researchgate.net/publication/3282450_Monitoring_distributed_systems
 # основна частина
 ## Дотичні дослідження
 
-TODO: 
+Observing Distributed Computations The obvious setting where distributed monitoring arises is when the system under scrutiny is itself distributed.
+One important problem related to observing distributed computations is that of
+detecting global predicates, which is recognized as an important problem since
+the early ages of distributed computing [Cooper and Marzullo, 1991].
+It is known that checking general predicates is hard, since one has to store
+and enumerate all interleavings of the local processes. The so-called computation
+slices can be used for a more efficient detection [see Mittal et al., 2007; Alagar
+and Venkatesan, 2001; Chauhan et al., 2013]. Slices are abstractions of the distributed computation that guarantee that the predicate is present in a slice if
+occurred in some state of the original computation. If an algorithm is too general
+and does not exploit the structure of the predicate under consideration, predicate
+detection can involve a long runtime and large memory overhead [Chauhan et al.,
+2013]. Hence, best current solutions for predicate detection consider only fragments of the possible space of global predicates (for example the so-called linear,
+relational, regular and co-regular, and stable fragments) to gain efficiency. Even
+though most techniques for predicate detection [Cooper and Marzullo, 1991; Mittal et al., 2007; Alagar and Venkatesan, 2001] send all local events to a central
+Runtime Verification for Decentralized and Distributed Systems 5
+process for inspection of its interleavings, some modern approaches [Chauhan
+et al., 2013] consider purely distributed detection. Based on [Chauhan et al.,
+2013], Mostafa and Bonakdarpour [Mostafa and Bonakdarpour, 2015] adapt the
+work on predicate detection to detect LTL properties.
+
+The term Observability originates in control system theory and measures the
+degree to which a system’s internal state can be determined from its output
+[7]. In cloud environments, observability indicates to what degree infrastructure
+and applications and their interactions can be monitored. Outputs used are for
+example logs, metrics and traces [18].
+
+Besides monitoring individual service calls, it is important to predict the runtime performance of distributed systems. Johng et al. [11] show that two techniques, benchmarking and simulation, have shortcomings if they are used sep-
+On Observability and Monitoring of Distributed Systems 3
+arately and introduce and validate a complementary approach. Their approach
+presents a process which maps benchmark ontologies of simulations. This prove
+to be inexpensive, fast and reliable. Similarly, Lin et. al [14] propose a novel way
+of root cause detection in microservice architectures utilizing causal graphs. In
+our interviews we found that performance is often only known when a system
+goes live, as the interdependencies between different services and their individual
+performance are not assessed beforehand.
+
+https://arxiv.org/pdf/1907.12240.pdf
+
+
+http://staff.um.edu.mt/afra1/papers/RV-book-distributed.pdf
+
 Фундаментальні для області дослідження висвітленої в цій роботі стали роботи ... , що 
 
 Є також сучасні дослідження, які розкривають аспекти моніторингу, що є прикладними до сьогодення, описуючи інструменти та підходи, що вже використовуються серед розробників систем. Гарним прикладом такого дослідження є "On Observability and Monitoring of Distributed Systems – An Industry Interview Study" від Sina Niedermaier, Falko Koetter, Andreas Freymann, Stefan Wagner. Такі дослідження менше фокусуються на фундаментальних концепціях, натякаючи, що читачі вже знайомі з усією термінологією, а основою дослідження є прикладні історії та висновки з індустрії.  
