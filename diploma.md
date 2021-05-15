@@ -134,25 +134,13 @@ https://www.researchgate.net/publication/3282450_Monitoring_distributed_systems
 # основна частина
 ## Дотичні дослідження
 
-Observing Distributed Computations The obvious setting where distributed monitoring arises is when the system under scrutiny is itself distributed.
-One important problem related to observing distributed computations is that of
-detecting global predicates, which is recognized as an important problem since
-the early ages of distributed computing [Cooper and Marzullo, 1991].
-It is known that checking general predicates is hard, since one has to store
-and enumerate all interleavings of the local processes. The so-called computation
-slices can be used for a more efficient detection [see Mittal et al., 2007; Alagar
-and Venkatesan, 2001; Chauhan et al., 2013]. Slices are abstractions of the distributed computation that guarantee that the predicate is present in a slice if
-occurred in some state of the original computation. If an algorithm is too general
-and does not exploit the structure of the predicate under consideration, predicate
-detection can involve a long runtime and large memory overhead [Chauhan et al.,
-2013]. Hence, best current solutions for predicate detection consider only fragments of the possible space of global predicates (for example the so-called linear,
-relational, regular and co-regular, and stable fragments) to gain efficiency. Even
-though most techniques for predicate detection [Cooper and Marzullo, 1991; Mittal et al., 2007; Alagar and Venkatesan, 2001] send all local events to a central
-Runtime Verification for Decentralized and Distributed Systems 5
-process for inspection of its interleavings, some modern approaches [Chauhan
-et al., 2013] consider purely distributed detection. Based on [Chauhan et al.,
-2013], Mostafa and Bonakdarpour [Mostafa and Bonakdarpour, 2015] adapt the
-work on predicate detection to detect LTL properties.
+Observing Distributed Computations
+
+Дослідження проблем навколо оглядовості розподілених систем ведуться ще з ранніх часів паралельних обчислень [Cooper and Marzullo, 1991]. 
+
+Існують також сучасні роботи, що  розглядають підходи для моніторингу виключно розподілених систем [Chauhan
+et al., 2013]. Базуючись на [Chauhan et al.,
+2013], Mostafa and Bonakdarpour [Mostafa and Bonakdarpour, 2015] адаптують підходи для розпізнавання аномалій за певними властивостями, що можна вважати некоректною поведінкою.
 
 The term Observability originates in control system theory and measures the
 degree to which a system’s internal state can be determined from its output
