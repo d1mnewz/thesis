@@ -8,13 +8,13 @@ TODO:
 
 # анотація (укр та англ)
 
-Моніторинг та оглядовість включають в себе збір, обробку, аналіз та візуалізацію різноманітної динамічної інформації стосовно певного процесу. 
-У сучасних розподілених системах вже доступна велика кількість напрацювань, аби полегшити ці три нетривіальні завдання, проте моніторинг досі одна з найскладніших та найважливіших частин моделювання програмних продуктів у production середовищах.
+Моніторинг та оглядовість включають в себе збір, аналіз та візуалізацію різноманітної динамічної інформації стосовно певного процесу. 
+У сучасних розподілених системах вже доступна велика кількість напрацювань, аби полегшити ці три нетривіальні завдання, проте моніторинг досі одна з найскладніших та найважливіших частин моделювання програмних продуктів у production середовищах. 
 Робота розкриває причини такого широкого поширення розподілених систем серед розробників та тих, хто моделює системи, наголошуючи на доступності таких практик як DevOps, SRE, тощо.
 
 Робота також визначає характеристики розподілених систем, що роблять їх моніторинг таким нетривіальним. Ці характеристики використані задля розуміння методології моніторингу та порівняння доступних досліджень на цю тематику.
 
-Сама робота має на меті дослідити важливість моніторингу та оглядовісті в сучасних розподілених системах, зважаючи на доменну область системи в якій застосовані, а також дослідити збір, обробку, аналіз, та презентацію операційних даних в розподілених системах задля запобігання критичним ситуаціям. Окрім технічних аспектів моніторингу, робота також оцінює моніторинг з точки зору менеджера проєктів, описуючи підходи до SLA, культури моніторингу, інцидентів, тощо. Так само, робота досліджує інциденти, що стаються та методологію відновлення від них, з наголосом на те, як це впливає на запобігання наступним інцидентам. Так само, робота розкриває ціну моніторингу на різних етапах життєвого циклу програмного продукту, з наголосом на ціну моніторингу саме в production середовищах. 
+Сама робота має на меті дослідити важливість моніторингу та оглядовісті в сучасних розподілених системах, зважаючи на доменну область системи в якій застосовані, а також дослідити збір, аналіз, та презентацію операційних даних в розподілених системах задля запобігання критичним ситуаціям. Окрім технічних аспектів моніторингу, робота також оцінює моніторинг з точки зору менеджера проєктів, описуючи підходи до SLA, культури моніторингу, інцидентів, тощо. Так само, робота досліджує інциденти, що стаються та методологію відновлення від них, з наголосом на те, як це впливає на запобігання наступним інцидентам. Так само, робота розкриває ціну моніторингу на різних етапах життєвого циклу програмного продукту, з наголосом на ціну моніторингу саме в production середовищах. 
 
 Кожна частина цього дослідження буде розглянута як концептуально, так і на практиці, підтверджуючи теорію прикладами створених систем та їх оглядовості: метрик, сповіщень, логування, графіків, повідомлень, відлагодження, трасування. Ці приклади виконані з урахуванням доступних сучасних інструментів таких як Prometheus, .NET, Kibana, ElasticSearch, Logstash, Zipkin, OpenTelemetry, та інші. 
 
@@ -22,8 +22,21 @@ TODO:
 
 Ключові слова: MONITORING, OBSERVABILITY, DISTRIBUTED SYSTEMS, SOFTWARE SAFETY, SOFTWARE ENGINEERING, PREVENTIVE SAFETY IN SOFTWARE
 
-Анотація англійською.
-TODO:
+# Анотація англійською.
+
+Monitoring and observability for distributed systems include collecting, analyzing, and presenting various dynamic data regarding some particular processes running in the distributed system.
+In a modern distributed systems environment, many works and practices are available for making these non-trivial tasks more manageable, even though monitoring remains one of the most complicated aspects to tackle while modeling production-ready software. The work exposes reasons behind such wide adoption of distributed systems for modern industry workloads, focusing on such practices as DevOps and SRE, making it so accessible for a broad audience.
+
+The work also defines characteristics of distributed systems that make monitoring so complicated. These characteristics are used for understanding the methodology of monitoring and comparing related papers.
+
+The main goal of the work is to examine the importance of monitoring and observability in the modern distributed system, taking into account the domain where applied. Also, to investigate collecting, analyzing, and presenting operational data in distributed systems for preventing critical situations, i.e., incidents. Besides technical challenges, the works also evaluate the monitoring from a product ownership point of view, describing the approaches to SLAs, monitoring culture mindset, incidents, et cetera. Also, incidents are discussed in work, focusing on recovering and learning from them, most importantly preventing them in the future. Then, the price of monitoring is discussed at various stages of the software product lifecycle, especially in production environments.
+
+Also, the software product is built based on this study which shows the usage of modern monitoring best practices. All of the aspects are covered both conceptually and practically: metrics, alerts, logging, dashboards, messages, debugging, tracing. The software product is built for the reader's better understanding of the concepts described. Technologies used to create this sample include but are not limited to .NET Core, Prometheus, Docker, Docker-Compose, Kibana, Logstash, Zipkin, OpenTelemetry.
+
+The information given in this thesis is based on the researcher's experience regarding building and architecting distributed systems and running and supporting such systems in production environments with a strong focus on reliability, stability, and safety.
+
+Keywords: MONITORING, OBSERVABILITY, DISTRIBUTED SYSTEMS, SOFTWARE SAFETY, SOFTWARE ENGINEERING, PREVENTIVE SAFETY IN SOFTWARE
+
 # зміст
 
 # перелік умовних позначень, символів, одиниць, скорочень і термінів
