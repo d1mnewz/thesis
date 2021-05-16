@@ -528,13 +528,8 @@ sre book
 
 # додатки
 
-весь код.
+весь код, таблиці, картинки, тощо. 
 
 # ACKNOWLEDGMENTS
 
-We would like to thank the faculty, students, and staff associated with the Jade
-Project for contributing ideas and for providing an excellent environment in
-which to explore these ideas. Special recognition is due John Cleary and Radford
-Neal for their contributions to this work. We would also like to express our
-appreciation to the Natural Science and Engineering Research Council of Canada
-for supporting this research. 
+Хотілося б подякувати усім людям, що супроводжували на шляху отримання релевантного досвіду для написання цієї роботи: усім, хто надихав, радив літературу, показував власні приклади, описував історії, тощо. Все це допомогло створити дану роботу саме такою, як вона є.
