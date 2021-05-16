@@ -72,7 +72,8 @@ JSON -
 
 CPU - 
 Кешування -
-Apache License 2.0 - 
+Apache License 2.0 -
+Cloud Native Computing Foundation - 
 # вступ
 
 TODO:
@@ -138,9 +139,7 @@ Observing Distributed Computations
 
 Дослідження проблем навколо оглядовості розподілених систем ведуться ще з ранніх часів паралельних обчислень [Cooper and Marzullo, 1991]. 
 
-Існують також сучасні роботи, що  розглядають підходи для моніторингу виключно розподілених систем [Chauhan
-et al., 2013]. Базуючись на [Chauhan et al.,
-2013], Mostafa and Bonakdarpour [Mostafa and Bonakdarpour, 2015] адаптують підходи для розпізнавання аномалій за певними властивостями, що можна вважати некоректною поведінкою.
+Існують також сучасні роботи, що  розглядають підходи для моніторингу виключно розподілених систем [Chauhan et al., 2013]. Базуючись на [Chauhan et al., 2013], Mostafa and Bonakdarpour [Mostafa and Bonakdarpour, 2015] адаптують підходи для розпізнавання аномалій за певними властивостями, що можна вважати некоректною поведінкою.
 
 The term Observability originates in control system theory and measures the
 degree to which a system’s internal state can be determined from its output
@@ -320,7 +319,8 @@ https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/
 Docker, Docker-compose, each line in file.
 yaml
 
-Prometheus - це моніторингове рішення з відкритим кодом, що широко застосовується для збору, обробки та презентації даних пов'язаних з метриками. Першочергово, це рішення було розробленим в компанії SoundCloud, а згодом його зробили доступним для загального користування за ліцензією Apache License 2.0. 
+Prometheus - це моніторингове рішення з відкритим кодом, що широко застосовується для збору, обробки та презентації даних пов'язаних з метриками. Першочергово, це рішення було розробленим в компанії SoundCloud, а згодом його зробили доступним для загального користування за ліцензією Apache License 2.0.
+Після його створення в 2012 багато компаній та організацій почали ним користуватись, адже проєкт мав велику спільноту навколо нього, що означало підтримку. Так само, Prometheus було додано до Cloud Native Computing Foundation у 2016, що підтверджує його статус стандарту в індустрії.
 Для того щоб розгорнути Prometheus у відповідному середовищі було використано Docker-Compose як найоптимальніший спосіб для швидкого розгортання, що не залежить від стану середовища.  
 У наступних додатках можна побачити конфігураційні файли для Prometheus, що виконані на мові YAML. Ці конфігураційні файли впливають на те, як буде розгорнутим Prometheus та якою буде його поведінка у середовищі.
 
@@ -331,32 +331,63 @@ https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/
 https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/prometheus/alert.yml#L1
 Додаток х. alert.yml визначає, які сповіщення Prometheus мусить відслідковувати і повідомляти користувачам, якщо такі стануться. 
 
+Агрегуючи усі наявні метрики, наш програмний продукт відкриває їх через API endpoint "/metrics". Зробивши запит до цього API endpoint, можна побачити наступну відповідь: 
+
+```
+# HELP process_open_handles Number of open handles
+# TYPE process_open_handles gauge
+process_open_handles 461
+# HELP process_working_set_bytes Process working set
+# TYPE process_working_set_bytes gauge
+process_working_set_bytes 51826688
+# HELP process_num_threads Total number of threads
+# TYPE process_num_threads gauge
+process_num_threads 25
+# HELP prom_warning This fields indicates the warning count.
+# TYPE prom_warning counter
+prom_warning 3
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 2.453125
+# HELP process_private_memory_bytes Process private memory size
+# TYPE process_private_memory_bytes gauge
+process_private_memory_bytes 34926592
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1621152828.4403536
+# HELP dotnet_collection_count_total GC collection count
+# TYPE dotnet_collection_count_total counter
+dotnet_collection_count_total{generation="1"} 0
+dotnet_collection_count_total{generation="2"} 0
+dotnet_collection_count_total{generation="0"} 0
+# HELP prom_exception This fields indicates the exception count.
+# TYPE prom_exception counter
+prom_exception 2
+# HELP prom_ok This fields indicates the transactions that were processed correctly.
+# TYPE prom_ok counter
+prom_ok 131
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2203929231360
+# HELP dotnet_total_memory_bytes Total known allocated memory
+# TYPE dotnet_total_memory_bytes gauge
+dotnet_total_memory_bytes 4218768
+```
+Додаток X. Відповідь API endpoint, що дає розроблений програмний продукт. 
 
 ###### Візуалізовуючи результати моніторингу
 
-базуючись на прикладі з Prometheus описати доступні візуальні частини в Prometheus UI.
+Prometheus відображдає продуктивність системи у вигляді графу, що дозволяє користувачам у доступному їм форматі легко зрозуміти стан системи. Інформація подана в форматі графіків дозволяє легко порівнювати продуктивність системи з різних перспектив, а також оцінювати її відносно часу. 
+Задля інтерактивної візуалізації використовується Prometheus Expression Browser, що надає ефективний спосіб відображати великі об'єми метрик зібраних за певний час. Ця частина системи є доступною за шляхом "http://localhost:9000/new/graph". За допомогою Prometheus Expression Browser можна дослідити дані, вибираючи конкретні метрики, що користувач хоче побачити на графіку.
 
-// TODO:
-- візуалізація
-	- з роками, моніторинг системи еволюціонували і створили власні мови для маніпуляції даними та презентації їх в вигляді графів, чартів, сповіщень, дашбордів.   
-		- алерти
-		- дашборди
-		- лог агрегація і пошук  
-	- імпл - Ажуре, ELK, AWS, тощо
-		- цікаво, але для розподіленої системи оптимальним є використати систему для моніторингу, яка, в свою чергу, теж є розподіленою. розгляньмо приклад ELK stack  
-		- як готувати обсервабліті в Ажуре
-	
-Рисунок. 
+https://cdn.buttercms.com/Hm6hrn2nRT2VznSRd13m
+Рисунок х. Приклад користування Prometheus
+https://cdn.buttercms.com/z3am8gfBTQKIjdvAOQKQ
+Рисунок х. Приклад користування Prometheus
+
+Рисунок x. тг
 Дослідивши даний графік, вже можна зробити висновки, що програма не є стабільною, адже очевидними є падіння в графіку, що репрезентують вимкнення програми.
-Так само, варто наголосити на тому, що графік показує лінійний ріст вимірюваної метрики.
-Які є способи візуалізації даних, що можуть оптимаьно презентувати моніторингові дані:
-- Гістограми
-- Граф
-- Текст
-- Часові діаграми
-- Pie-charts 
-- 
-
+Так само, варто наголосити на тому, що графік показує лінійний ріст вимірюваної метрики - "prom_ok". 
 
 ##### ціна моніторингу як інструменту забезпечення стабільності
 
