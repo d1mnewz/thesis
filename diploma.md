@@ -81,55 +81,25 @@ TODO:
 
 ## Дотичні дослідження
 
-
-є багато класичних про створення своїх моніторин систем
-Observing Distributed Computations
-
 Дослідження проблем навколо оглядовості розподілених систем ведуться ще з ранніх часів паралельних обчислень [Cooper and Marzullo, 1991].
+Термінологія моніторингу та оглядовості бере свої початки в теорії контролю систем та вимірює рівень відносоно якого за системою можна спостерігати, іншими словами - як внутрішній стан системи може бути визначеним через зовнішній стан. 
+
+Більшість таких класичних досліджень були сфокусуваними на створенні власних моніторингових систем, що були покликані забезпечити розуміння стабільності розподіленої системи. (референси)
+
+Окрім стандартних підходів до моніторингу, дуже важливим є передбачати продуктивність розподілених систем.  
+Johng et al. [11] досліджуючи тематику, пропонує два підходи до проблеми моніторингу - бенчмаркінг та симуляція роботи розподілених систем. Ці підходи виявляються оптимальними та раціональними, швидкими, дешевими та надійними. Так само, Lin et. al [14] пропонує новий шлях дослідження та знаходження причин інцидентів у мікросервісних архітектурах за допомогою візуалізації.
+
+В хмарних середовищах, оглядовість визначається за таким же принципом, проте зовнішнім станом можуть бути логи, метрики, трейси, тощо. Саме вони використовуються для визначення рівня оглядовості.
 
 Існують також сучасні роботи, що  розглядають підходи для моніторингу виключно розподілених систем [Chauhan et al., 2013]. Базуючись на [Chauhan et al., 2013], Mostafa and Bonakdarpour [Mostafa and Bonakdarpour, 2015] адаптують підходи для розпізнавання аномалій за певними властивостями, що можна вважати некоректною поведінкою.
 
-The term Observability originates in control system theory and measures the
-degree to which a system’s internal state can be determined from its output
-[7]. In cloud environments, observability indicates to what degree infrastructure
-and applications and their interactions can be monitored. Outputs used are for
-example logs, metrics and traces [18].
 
-Besides monitoring individual service calls, it is important to predict the runtime performance of distributed systems. Johng et al. [11] show that two techniques, benchmarking and simulation, have shortcomings if they are used sep-
-On Observability and Monitoring of Distributed Systems 3
-arately and introduce and validate a complementary approach. Their approach
-presents a process which maps benchmark ontologies of simulations. This prove
-to be inexpensive, fast and reliable. Similarly, Lin et. al [14] propose a novel way
-of root cause detection in microservice architectures utilizing causal graphs. In
-our interviews we found that performance is often only known when a system
-goes live, as the interdependencies between different services and their individual
-performance are not assessed beforehand.
-
-https://arxiv.org/pdf/1907.12240.pdf
+Є також сучасні дослідження, які розкривають аспекти моніторингу, що є прикладними до сьогодення, описуючи інструменти та підходи, що вже використовуються серед розробників систем. Гарним прикладом такого дослідження є "On Observability and Monitoring of Distributed Systems – An Industry Interview Study" від Sina Niedermaier, Falko Koetter, Andreas Freymann, Stefan Wagner. Такі дослідження менше фокусуються на фундаментальних концепціях, натякаючи, що читачі вже знайомі з усією термінологією, а основою дослідження є прикладні історії та висновки з індустрії.
 
 
 http://staff.um.edu.mt/afra1/papers/RV-book-distributed.pdf
 
-Фундаментальні для області дослідження висвітленої в цій роботі стали роботи ... , що
-
-Є також сучасні дослідження, які розкривають аспекти моніторингу, що є прикладними до сьогодення, описуючи інструменти та підходи, що вже використовуються серед розробників систем. Гарним прикладом такого дослідження є "On Observability and Monitoring of Distributed Systems – An Industry Interview Study" від Sina Niedermaier, Falko Koetter, Andreas Freymann, Stefan Wagner. Такі дослідження менше фокусуються на фундаментальних концепціях, натякаючи, що читачі вже знайомі з усією термінологією, а основою дослідження є прикладні історії та висновки з індустрії.
-
 https://arxiv.org/pdf/1907.12240.pdf
-To provide context to the survey described in this work, the related work investigates (1) current approaches to bridging the gap between distributed system
-complexity and monitoring capability as well as (2) preceding surveys regarding
-monitoring and observability (see Figure 1).
-IEEE defines monitoring as the supervising, recording, analyzing or verifying
-the operation of a system or component [10].
-The term Observability originates in control system theory and measures the
-degree to which a system’s internal state can be determined from its output
-[7]. In cloud environments, observability indicates to what degree infrastructure
-and applications and their interactions can be monitored. Outputs used are for
-example logs, metrics and traces [18].
-Yang et al. [24] investigate the capturing of service execution paths in distributed systems. While capturing the execution path is challenging, as each
-request may cross many components of several servers, they introduce a generic
-end-to-end methodology to capture the entire request
-
-
 
 Превентивний аспект моніторингу розподілених систем не був досі широко висвітленим серед доступних досліджень, тому й ця робота покликана заповнити цю прогалину, аналізуючи існуючі дотичні роботи, та осмислюючи як моніторинг може запобігати інцидентам та різноманітним неочікуваним проблемам.
 
