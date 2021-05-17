@@ -523,6 +523,7 @@ On Observability and Monitoring of Distributed
 Systems – An Industry Interview Study 29 Jul 2019 https://arxiv.org/abs/1907.12240
 Sina Niedermaier Falko Koetter Andreas Freymann and Stefan Wagner
 
+IEEE: Ieee standard glossary of software engineering terminology (1990), https://ieeexplore.ieee.org/document/159342
 
 sre book
 
