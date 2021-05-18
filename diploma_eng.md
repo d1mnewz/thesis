@@ -139,11 +139,195 @@ Already knowing monitoring stages, we can also present the three pillars of moni
 
 # Implementing monitoring
 
+Кожна з описаних вище компонентів необхідна, аби розподілена система стала оглядовою. Це було зроблено в розробленій нами програмі, яка покликана показати практичні приклади використання моніторингу в розподілених системах в контексті превентивної безпеки.
+В розробленій програмі було використано такі технології як .NET Core, Docker, Docker-Compose, Prometheus, Kibana, ElasticSearch та Logstash. Кожен з цих компонентів відповідає за певну частину моніторингу.
+
+.NET Core консольний додаток є ...
+full code
+
+Docker-compose to aggregate
+https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/docker-compose.yml#L1
+Docker, Docker-compose, each line in file.
+yaml
+
+Prometheus - це моніторингове рішення з відкритим кодом, що широко застосовується для збору, обробки та презентації даних пов'язаних з метриками. Першочергово, це рішення було розробленим в компанії SoundCloud, а згодом його зробили доступним для загального користування за ліцензією Apache License 2.0.
+Після його створення в 2012 багато компаній та організацій почали ним користуватись, адже проєкт мав велику спільноту навколо нього, що означало підтримку. Так само, Prometheus було додано до Cloud Native Computing Foundation у 2016, що підтверджує його статус стандарту в індустрії.
+Для того щоб розгорнути Prometheus у відповідному середовищі було використано Docker-Compose як найоптимальніший спосіб для швидкого розгортання, що не залежить від стану середовища.  
+У наступних додатках можна побачити конфігураційні файли для Prometheus, що виконані на мові YAML. Ці конфігураційні файли впливають на те, як буде розгорнутим Prometheus та якою буде його поведінка у середовищі.
+
+https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/docker-compose.yml#L11
+Додаток х.
+https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/prometheus/prometheus.yml#L1
+Додаток х.
+https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/prometheus/alert.yml#L1
+Додаток х. alert.yml визначає, які сповіщення Prometheus мусить відслідковувати і повідомляти користувачам, якщо такі стануться.
+
+Агрегуючи усі наявні метрики, наш програмний продукт відкриває їх через API endpoint "/metrics". Зробивши запит до цього API endpoint, можна побачити наступну відповідь:
+
+```
+# HELP process_open_handles Number of open handles
+# TYPE process_open_handles gauge
+process_open_handles 461
+# HELP process_working_set_bytes Process working set
+# TYPE process_working_set_bytes gauge
+process_working_set_bytes 51826688
+# HELP process_num_threads Total number of threads
+# TYPE process_num_threads gauge
+process_num_threads 25
+# HELP prom_warning This fields indicates the warning count.
+# TYPE prom_warning counter
+prom_warning 3
+# HELP process_cpu_seconds_total Total user and system CPU time spent in seconds.
+# TYPE process_cpu_seconds_total counter
+process_cpu_seconds_total 2.453125
+# HELP process_private_memory_bytes Process private memory size
+# TYPE process_private_memory_bytes gauge
+process_private_memory_bytes 34926592
+# HELP process_start_time_seconds Start time of the process since unix epoch in seconds.
+# TYPE process_start_time_seconds gauge
+process_start_time_seconds 1621152828.4403536
+# HELP dotnet_collection_count_total GC collection count
+# TYPE dotnet_collection_count_total counter
+dotnet_collection_count_total{generation="1"} 0
+dotnet_collection_count_total{generation="2"} 0
+dotnet_collection_count_total{generation="0"} 0
+# HELP prom_exception This fields indicates the exception count.
+# TYPE prom_exception counter
+prom_exception 2
+# HELP prom_ok This fields indicates the transactions that were processed correctly.
+# TYPE prom_ok counter
+prom_ok 131
+# HELP process_virtual_memory_bytes Virtual memory size in bytes.
+# TYPE process_virtual_memory_bytes gauge
+process_virtual_memory_bytes 2203929231360
+# HELP dotnet_total_memory_bytes Total known allocated memory
+# TYPE dotnet_total_memory_bytes gauge
+dotnet_total_memory_bytes 4218768
+```
+Додаток X. Відповідь API endpoint, що дає розроблений програмний продукт.
+
+###### Візуалізовуючи результати моніторингу
+
+
 # Visualizing the results 
+
+Prometheus відображдає продуктивність системи у вигляді графу, що дозволяє користувачам у доступному їм форматі легко зрозуміти стан системи. Інформація подана в форматі графіків дозволяє легко порівнювати продуктивність системи з різних перспектив, а також оцінювати її відносно часу.
+Задля інтерактивної візуалізації використовується Prometheus Expression Browser, що надає ефективний спосіб відображати великі об'єми метрик зібраних за певний час. Ця частина системи є доступною за шляхом "http://localhost:9000/new/graph". За допомогою Prometheus Expression Browser можна дослідити дані, вибираючи конкретні метрики, що користувач хоче побачити на графіку.
+
+https://cdn.buttercms.com/Hm6hrn2nRT2VznSRd13m
+Рисунок х. Приклад користування Prometheus
+https://cdn.buttercms.com/z3am8gfBTQKIjdvAOQKQ
+Рисунок х. Приклад користування Prometheus
+
+Рисунок x. тг
+Дослідивши даний графік, вже можна зробити висновки, що програма не є стабільною, адже очевидними є падіння в графіку, що репрезентують вимкнення програми.
+Так само, варто наголосити на тому, що графік показує лінійний ріст вимірюваної метрики - "prom_ok".
+
 
 ## Preventive safety via monitoring in distributed systems
 
+Це звучить логічно, що покращувати стабільність системи має сенс для користувачів системи та для бізнесу. Тим не менше, це парадоксально - в деяких випадках стає лише гірше!
+
+Максимальна стабільність має свою ціну у вигляді довшого часу на розробку нових можливостей системи, довший час на доставку системи до користувачів. Очевидно, ця ціна напряму корелює з бюджетними обмеженнями, відповідно, менше можливостей системи буде імплементовано.
+
+Порівнюючи такі SLA як 99%, 99.99% та 99.999% для певної системи, можна стверджувати, що користувач зазвичай не помітить різниці, адже його користувацький досвід стосовно стабільності буде більше сфокусований на менш стабільних факторах таких як сучасний смартфон, що забезпечує 99% SLA.
+
+Table 3. Impact of downtime duration on availability metric.
+Downtime per month Downtime per year Availability %
+72 hours 36.5 days 90% ("one nine")
+7.20 hours 3.65 days 99% ("two nines")
+43.8 minutes 8.76 hours 99.9% ("three nines")
+4.38 minutes 52.56 minutes 99.99% ("four nines")
+25.9 seconds 5.26 minutes 99.999% ("five nines")
+
+
+Розуміючи ці фактори, при моделюванні систем ми мусимо глибоко розуміти доменну область і бізнес-модель проєкту, адже для соціальної мережі обміну картинками котиків абсолютно не обов'язково інвестувати в 99.999% SLA, проте для системи обробки запитів до невідкладної допомоги 9 годин відсутності можливості приймати запити є критичним та напряму впливає на життя та здоров'я користувачів системи. Тому, при виборі SLA, ми мусимо балансувати між ризиком недоступності системи (і шкодою, яка може бути нанесена цією недоступністю) та інноваційним розвитком системи, що створює нові можливості для своїх користувачів.
+Для того, аби змоделювати систему прийняття такого рішення, розглянемо наступний приклад, де кожен запит приносить однакову цінність:
+
+Пропозиція стосовно покращення SLA: 99.9% -> 99.99%
+Пропоноване покращення в стабільності: 0.09%
+Прибуток, який приносить система: 1 млн. дол.
+Фінансова цінність покращення: 1 млн. дол. * 0.0009 = 900$
+
+FTODO: ^ в таблицю.
+
+В цьому випадку, якщо вартість створення запропонованого покращення буде менша за 900$, то це має сенс імплементувати. Якщо вартість покращення буде вищою за 900$, то вартість покращення буде вищою за інвестицію, відповідно прибуток не збільшиться. Зазвичай, вартість такого покращення буде надзвичайно високою, адже покращення саме на верхній межі є найдорожчими з точки зору ресурсів необхідних на імплементацію.
+
+Так само, розглядаючи ціну моніторингу, варто згадати, що моніторинг вимагає впровадження, розробку, конфігурацію та підтримку додаткових систем. Окрім цього, це створює додаткове когнітивне навантаження на розробників, що займаються розробкою та підтримкою розподіленої системи. Відповідно, необхідно більше ресурсів витрачати на те, аби документувати підходи та навчити розробників користуватись такою моніторинговою системою.
+
+Тим не менше, інвестицію в навчання працівників можна оптимізувати таким чином, аби не витрачати на це час щоразу, коли з'являється новий працівник. Гарним рішенням подібної проблеми може бути уніфікація моніторингової інфраструктури та моніторингових вимог від частин розподіленої системи. У більшості випадків, моніторинг застосовується до різних платформ таких як .NET, Java, Go, тощо.
+Створивши документ, який описує найкращі практики до застосування моніторингових інструментів, з'являється можливість легкого навчання працівників, а також перевикористання цих найкращих практик у частинах розподіленої системи. Це стосується не лише концептуальних підходів, а й вже готових рішень для перевикористання: конфігурацій метрик, списку залежностей, тощо.
+Так само, окрім документації таких підходів, ще варто приділити увагу створенню базового прикладу сервісу, що береться за відправну точку для кожного нового сервісу в розподіленій системі. Такий базовий приклад включає в себе всі найкращі практики, які дозволяють вже бути готовими до використання в production середовищах з першого дня існування. Варто наголосити, що основна причина для такої документації - це оптимізувати використання часу в командах продуктових розробників, аби вони могли більше фокусуватися на продукті, а не на інструментації, моніторингу, чи налаштуванні інфраструктури.
+
+Так само, осмислюючи моніторинг, варто врахувати, що деякий відсоток обчислювальних ресурсів системи буде витрачатись на моніторинг. Відповідно, це буде відображено у загальній продуктивності системи. Деякі розподілені системи можуть сягати тисяч серверів, тому очевидно, що ресурси витрачені на моніторинг та оглядовість таких систем можуть мати великий вплив на продуктивність розподіленої системи. Аби обслуговувати такі розподілені системи, моніторингова система має споживати якомога менше ресурсів, наскільки це можливо, але не менше, аби не спричинити втрати даних або власну недоступність.
+
+Ще один фактор, що є частиною ціни і вартий того, аби його розглянути в даній роботі, це великий та постійно ростучий розмір артефакту, який створений моніторинговою системою. Очевидно, що обсяг даних, що збирається з розподіленої системи, є таким, що важко опрацювати, тому критично важливим є оптимізація таких даних для сприйняття користувачем. Так само, цей масив даних необхідно зберігати. В деяких системах є допустими видаляти такі дані після певного періоду зберігання.
+
+Кілька тез у якості висновку:
+- Надійність та стабільність систем має багато чого спільного з вимірюванням ризиків і прийманням обдуманих рішень. Аби вимірювати ризики, необхідно розуміти систему, продукт, а також вплив на користувачів. Вимірювання ризиків зазвичай є дорогим інструментом саме по собі.
+- Рівень доступності системи має бути підібраний відповідно до того, що бізнес може собі дозволити - з точки зору ціни та впливу помилок на користувачів. Більшість систем не потребують SLA 99.999% та більше.
+
+
+##### превентивна безпека за допомогою моніторингу
+
+The work describes possible negative outcomes for software product and defines what are the problems to be prevented by monitoring:
+- user dissatisfaction with the product
+- harm to users or their property (e.g., data)
+- loss of trust
+- direct or indirect income loss
+- negative pressure on brand name
+- undesired mentions in media
+- suboptimal usage of computing resources, therefore suboptimal financial strategy
+
+Most of these points are highly related to business outcomes since the business is the one affected by anything happening with distributed system. Also, some of these points are hardly measurable.
+So, everyone expects that system is going to be stable with no losses, no problems, and will gain profit to the company, and added value to its users. 
+
+The work already discussed some approaches to monitoring in previous chapters. Nevertheless, they all cover only identification and investigation of problems once incident has happened or is happening at the moment.
+Instead, this part of the research focuses on incidents before they actually happen. It focuses on preventing them from happening. Correspondingly, some of the approaches to preventive safety are similar to approaches for solving incidents in production systems. 
+Monitoring allows to see the negative trends in systems performance which, in its turn, allows them to take appropriate actions for reacting upon these trends. 
+In the context of preventive safety there is no direct need to react to these trends in the moment of identifying them. Instead, it makes more sense to analyze them and then prioritize only after figuring out their potential damage.
+Also, special attention should be payed to warnings. The codebase should be enriched with more logging, additional metrics which follow the same goal - to define granularity of system processes. In other words, it's important to understand situations where it's not an error yet, but at the same time it's not a happy-path scenario, subject to worry about. 
+Based on monitoring data presented in a form of dashboards and trends, system developers and product owners could take thought out decisions. There is always a spectre of available decisions to take. Samples are illustrated in the following table. 
+
+FTODO: Таблиця feedback loop cycle:
+Data analysis -> Decision & Action
+CPU slowly goes up during last month -> Developers decide to scale up so the service has more CPU available. It reduces the risk of incident for short period of time
+Service saturation goes down -> Developers take decision to scale down by having weaker server for this service. It optimized resource usage and financial strategy
+Database is heavily loaded, 2% requests fail -> Developers change the architecture by adding caching in front of database
+
+Also, the work discovers preventive safety for software products from managers point of view. 
+Key points there:
+- Managers are interested in system being stable so it can serve users
+- There is SLA which systems have to honour as it sets expectations. It's important to set realistic expecations in this case
+- Different domains require different SLAs
+- Managers want to make a data-driven decision on stability
+- Non-functional requirements are as important as functional for high-load systems
+- The main goal for manager is to balance the feature delivery and investment into system reliability
+
+Also, the work discusses the importance of creating monitoring culture and monitoring mindset which largely affects the software product being built. 
+
+Additionally, postmortem culture is discussed in the work as an instrument of preventive safety. While referring to postmortems, we also discuss Corrective and Predictive Actions (CAPA) as a concept from which postmortems are inherited. 
+So, postmortem document is a document regarding the incident happened which answers following questions:
+- What happened?
+- How system and developers reacted?
+- What could we do differently next time?
+- What could be done to prevent this from happening?
+
+The work focuses on last two questions since they are critical for understanding preventing the danger either by avoiding it, or fighting it more effectively. The work also stresses on sharing such postmortems so everyone could get a clear understanding of what has happened. That way, knowledge flows across the organization and prevents the happening of new incidents. In the end, postmortems are the potential to strenghten the distributed system and system developers.
+
 # Conclusions
+Monitoring is essential part of modern distributed systems for visualizing, testing, debugging and development. With no monitoring and observability modern distributed system have miniumum chances to succeed and to be stable. Taking into account this and other researches, it was identified that monitoring and observability of distributed systems are not that much of a technical issue anymore. Instead, it becomes a cross-concern topic which goes through whole software lifecycle, and, therefore, is critical for product success. 
+
+The work described distributed systems as field of study along with monitoring for better understanding of the domain. Also, the work exposed the problem of monitoring by describing the three pillars of monitoring - logs, traces and metrics. These pillars were presented both conceptually and with examples provided by softaware product built for illustrativeness. Mostly the work is dedicated to preventive safety as a goal, and monitoring as an instrument for achieving that goal. Thinking through monitoring, we also covered managerial point of view on that topic. Finally, we have covered postmortems as an approach to preventing incidents as well.
+Future works are presented in the following chapter.
+
+## Future work
+We suggest discovering the usage of Artificial Intelligence for anomaly detection since that's the area which has the most potential, and still not studied well. Such application might automate a lot of processes related to defining stable level of the system health. For instance, AI could be used for automatic defining of predicates to be used in alerts for distributed systems. Similarly, it could be used for identifying anomalies which are not involved in the alerts system, but, nevertheless, are relevant for discoverting the state of the system and might affect the stability of the system. Once the nature of these anomalies is well understood, it's possible to prevent the incidents. Another important usage of AI in monitoring systems could be automatic reducing of data presented to the user for investigation so it reduces the cognitive load. Obviously, there is some data to be neglected.
+Also, the most interesting area of applying AI and machine learning is predicting the root cause of incidents based on available data.
+
+We did not study deeply how monitoring affects the performance of distributed system so this could also be another topic for research. This is important since the technologies for monitoring change so fast so there is risk of reducing the performance of the system upon which monitoring is applied. 
+
+In this work we focused on modern approaches to monitoring with regards to preventive safety in distributed systems. Obviously, the modern world is evolving extremely rapid, especially in IT, thus it might be a great idea to create a research on changes which happen in preventive safety via monitoring in distributed systems. 
 
 # Bibliography
 
