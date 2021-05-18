@@ -512,17 +512,22 @@ Postmortem обов'язково мають бути досліджені не �
 В цій роботі ми фокусувались на сучасних підходах моніторингу стосовно превентивної безпеки в розподілених системах. Очевидно, що сучасний світ є таким, що швидко еволюціонує та змінюється, особливо в галузі інформаційних технологій. Тому однією з майбутніх робіт могло б бути дослідження змін, які відбуваються в превентивній безпекі за допомогою моніторингу в розподілених системах. 
 
 # список використаних джерел
-TODO:
 
-Manzo, M. & Frisiani, Arrigo & Vernazza, T.. (1982). A monitoring distributed system. Microprocessing and Microprogramming. 10. 19–24. 10.1016/0165-6074(82)90118-1.
-
-Robert Cooper and Keith Marzullo. Consistent detection of global predicates. In Proc. of the ACM/ONR Workshop on Parallel and Distributed Debugging, pages 163–173, 1991.
-
-On Observability and Monitoring of Distributed
-Systems – An Industry Interview Study 29 Jul 2019 https://arxiv.org/abs/1907.12240
-Sina Niedermaier Falko Koetter Andreas Freymann and Stefan Wagner
-
-IEEE: Ieee standard glossary of software engineering terminology (1990), https://ieeexplore.ieee.org/document/159342
+1.	Robert Cooper and Keith Marzullo. 1991. Consistent detection of global predicates. SIGPLAN Not. 26, 12 (Dec. 1991), 167–174. DOI:https://doi.org/10.1145/127695.122774
+2.	Mansouri-Samani, Masoud & Sloman, Morris. (1993). Monitoring distributed systems. Network, IEEE. 7. 20 - 30. 10.1109/65.244791.
+3.	IEEE: Ieee standard glossary of software engineering terminology (1990), https://ieeexplore.ieee.org/document/159342
+4.	Manzo, M. & Frisiani, Arrigo & Vernazza, T.. (1982). A monitoring distributed system. Microprocessing and Microprogramming. 10. 19–24. 10.1016/0165-6074(82)90118-1.
+5.	https://en.wikipedia.org/wiki/Observer_effect_(physics)
+6.	Distributed Systems Observability by Cindy Sridharan, https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/ch04.html#:~:text=Logs%2C%20metrics%2C%20and%20traces%20are,the%20three%20pillars%20of%20observability
+7.	Joyce, Jeffrey & Lomow, Greg & Slind, Konrad & Unger, Brian. (1987). Monitoring Distributed Systems.. ACM Trans. Comput. Syst.. 5. 121-150. 10.1145/13677.22723.
+8.	Johng, H., Kim, D., Hill, T., Chung, L.: Estimating the performance of cloud-based systems using benchmarking and simulation in a complementary manner. In: Intl Conference on Service-Oriented Computing. pp. 576–591. Springer (2018)
+9.	Lin, J., Chen, P., Zheng, Z.: Microscope: Pinpoint performance issues with causal graphs in micro-service environments. In: Service-Oriented Computing. pp. 3–20. Springer International Publishing, Cham (2018)
+10.	Pinal V Chauhan, 2012, Cloud Computing In Distributed System, INTERNATIONAL JOURNAL OF ENGINEERING RESEARCH & TECHNOLOGY (IJERT) Volume 01, Issue 10 (December 2012),
+11.	Mostafa, Menna & Bonakdarpour, Borzoo. (2015). Decentralized Runtime Verification of LTL Specifications in Distributed Systems. 494-503. 10.1109/IPDPS.2015.95.
+12.	Niedermaier, S., Koetter, F., Freymann, A., & Wagner, S. (2019). On Observability and Monitoring of Distributed Systems – An Industry Interview Study. Lecture Notes in Computer Science, 36–52.
+13.	George Coulouris. Distributed Systems: Concepts and Design. Addison-Wesley, 2011
+14.	Deepak Garg, Limin Jia, and Anupam Datta. Policy auditing over incomplete logs: Theory, implementation and applications. In Proc. of CCS’11, pages 151–162, 2011
+15.	Hagit Attiya and Jennifer L. Welch. Distributed computing: fundamentals, simulations and advanced topics. Wiley, 2004
 
 sre book
 

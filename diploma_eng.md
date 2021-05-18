@@ -139,30 +139,31 @@ Already knowing monitoring stages, we can also present the three pillars of moni
 
 # Implementing monitoring
 
-Кожна з описаних вище компонентів необхідна, аби розподілена система стала оглядовою. Це було зроблено в розробленій нами програмі, яка покликана показати практичні приклади використання моніторингу в розподілених системах в контексті превентивної безпеки.
-В розробленій програмі було використано такі технології як .NET Core, Docker, Docker-Compose, Prometheus, Kibana, ElasticSearch та Logstash. Кожен з цих компонентів відповідає за певну частину моніторингу.
+Each of components mentioned above - logs, metrics, and traces are essintial for the distributed system to become observable.  
+We have created an application which illustrates practical examples of monitoring usage in distributed systems.
+The application was developed with using such technologies as .NET Core, Docker, Docker-Compose, Prometheus, Kibana, ElasticSearch, Logstash. Each of these components is responsible for delivering a particular piece of monitoring. 
+.NET Core application is a host for our samples. By having corresponding program code, we made it emit and expose metrics via API endpoint so it could be accessible by external systems such as Prometheus scrapper. 
 
-.NET Core консольний додаток є ...
 full code
 
-Docker-compose to aggregate
-https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/docker-compose.yml#L1
-Docker, Docker-compose, each line in file.
-yaml
+Docker-compose was used to aggregate all the required monitoring components so it's all deployed at once running a simple command:
 
-Prometheus - це моніторингове рішення з відкритим кодом, що широко застосовується для збору, обробки та презентації даних пов'язаних з метриками. Першочергово, це рішення було розробленим в компанії SoundCloud, а згодом його зробили доступним для загального користування за ліцензією Apache License 2.0.
-Після його створення в 2012 багато компаній та організацій почали ним користуватись, адже проєкт мав велику спільноту навколо нього, що означало підтримку. Так само, Prometheus було додано до Cloud Native Computing Foundation у 2016, що підтверджує його статус стандарту в індустрії.
-Для того щоб розгорнути Prometheus у відповідному середовищі було використано Docker-Compose як найоптимальніший спосіб для швидкого розгортання, що не залежить від стану середовища.  
-У наступних додатках можна побачити конфігураційні файли для Prometheus, що виконані на мові YAML. Ці конфігураційні файли впливають на те, як буде розгорнутим Prometheus та якою буде його поведінка у середовищі.
+`docker-compose up -d`
+
+https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/docker-compose.yml#L1
+Prometheus is an open-source monitoring solution widely used for data collection, analysis and presentating the data related to metrics. Initially, that solution was developed by SoundCloud and then made available as open-source solution for mass usage via Apache Licence 2.0.
+
+For deploying Prometheus we used Docker-Compose as optimal solution for quick environment-agnostic deployment. 
+Following attachments show the configuration files for Prometheus. They are done in YAML. These configuration files affect the deployment process and the behaviour of the system in the environment.
 
 https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/docker-compose.yml#L11
-Додаток х.
+Attachment х.
 https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/prometheus/prometheus.yml#L1
-Додаток х.
+Attachment  х.
 https://github.com/d1mnewz/thesis/blob/f1c7e24b8b8d464574ff0d1d9000aa7bb10ba4f1/docker-elk-main/prometheus/alert.yml#L1
-Додаток х. alert.yml визначає, які сповіщення Prometheus мусить відслідковувати і повідомляти користувачам, якщо такі стануться.
+Attachment х. alert.yml defines which alerts Prometheus must identify and notify to users.
 
-Агрегуючи усі наявні метрики, наш програмний продукт відкриває їх через API endpoint "/metrics". Зробивши запит до цього API endpoint, можна побачити наступну відповідь:
+All metrics are aggregated, and the software product exposes them via API endpoint called "/metrics". The response that API endpoint sends is the following:
 
 ```
 # HELP process_open_handles Number of open handles
@@ -204,71 +205,26 @@ process_virtual_memory_bytes 2203929231360
 # TYPE dotnet_total_memory_bytes gauge
 dotnet_total_memory_bytes 4218768
 ```
-Додаток X. Відповідь API endpoint, що дає розроблений програмний продукт.
+Додаток X. "/metrics" API endpoint response.
 
 ###### Візуалізовуючи результати моніторингу
 
 
 # Visualizing the results 
 
-Prometheus відображдає продуктивність системи у вигляді графу, що дозволяє користувачам у доступному їм форматі легко зрозуміти стан системи. Інформація подана в форматі графіків дозволяє легко порівнювати продуктивність системи з різних перспектив, а також оцінювати її відносно часу.
-Задля інтерактивної візуалізації використовується Prometheus Expression Browser, що надає ефективний спосіб відображати великі об'єми метрик зібраних за певний час. Ця частина системи є доступною за шляхом "http://localhost:9000/new/graph". За допомогою Prometheus Expression Browser можна дослідити дані, вибираючи конкретні метрики, що користувач хоче побачити на графіку.
+Prometheus displays productivity of the system in a form of graph which allows users to easily understand state of the system at glance. Graphs allow easy comparison of system performance from time-series point of view.
+For more interactive visualization Prometheus Expression Browser is used. It enables us to display huge amount of metrics collected over time. That part of the system is available via "http://localhost:9000/new/graph".  With a help of P Prometheus Expression Browser we can explore data, picking the most appropriate metrics to be seen on a graph.
 
 https://cdn.buttercms.com/Hm6hrn2nRT2VznSRd13m
-Рисунок х. Приклад користування Prometheus
+Рисунок х. Example of Prometheus usage.
 https://cdn.buttercms.com/z3am8gfBTQKIjdvAOQKQ
-Рисунок х. Приклад користування Prometheus
+Рисунок х. Example of Prometheus usage.
 
-Рисунок x. тг
-Дослідивши даний графік, вже можна зробити висновки, що програма не є стабільною, адже очевидними є падіння в графіку, що репрезентують вимкнення програми.
-Так само, варто наголосити на тому, що графік показує лінійний ріст вимірюваної метрики - "prom_ok".
+Рисунок x. TG
+As we have explored the graph, we can conclude that the software product is not stable since there are obvious falls in the graph which means the shut down of the program. Also, important thing to mention is that graph is showing linear growth of selected metric - "prom_ok".
 
 
 ## Preventive safety via monitoring in distributed systems
-
-Це звучить логічно, що покращувати стабільність системи має сенс для користувачів системи та для бізнесу. Тим не менше, це парадоксально - в деяких випадках стає лише гірше!
-
-Максимальна стабільність має свою ціну у вигляді довшого часу на розробку нових можливостей системи, довший час на доставку системи до користувачів. Очевидно, ця ціна напряму корелює з бюджетними обмеженнями, відповідно, менше можливостей системи буде імплементовано.
-
-Порівнюючи такі SLA як 99%, 99.99% та 99.999% для певної системи, можна стверджувати, що користувач зазвичай не помітить різниці, адже його користувацький досвід стосовно стабільності буде більше сфокусований на менш стабільних факторах таких як сучасний смартфон, що забезпечує 99% SLA.
-
-Table 3. Impact of downtime duration on availability metric.
-Downtime per month Downtime per year Availability %
-72 hours 36.5 days 90% ("one nine")
-7.20 hours 3.65 days 99% ("two nines")
-43.8 minutes 8.76 hours 99.9% ("three nines")
-4.38 minutes 52.56 minutes 99.99% ("four nines")
-25.9 seconds 5.26 minutes 99.999% ("five nines")
-
-
-Розуміючи ці фактори, при моделюванні систем ми мусимо глибоко розуміти доменну область і бізнес-модель проєкту, адже для соціальної мережі обміну картинками котиків абсолютно не обов'язково інвестувати в 99.999% SLA, проте для системи обробки запитів до невідкладної допомоги 9 годин відсутності можливості приймати запити є критичним та напряму впливає на життя та здоров'я користувачів системи. Тому, при виборі SLA, ми мусимо балансувати між ризиком недоступності системи (і шкодою, яка може бути нанесена цією недоступністю) та інноваційним розвитком системи, що створює нові можливості для своїх користувачів.
-Для того, аби змоделювати систему прийняття такого рішення, розглянемо наступний приклад, де кожен запит приносить однакову цінність:
-
-Пропозиція стосовно покращення SLA: 99.9% -> 99.99%
-Пропоноване покращення в стабільності: 0.09%
-Прибуток, який приносить система: 1 млн. дол.
-Фінансова цінність покращення: 1 млн. дол. * 0.0009 = 900$
-
-FTODO: ^ в таблицю.
-
-В цьому випадку, якщо вартість створення запропонованого покращення буде менша за 900$, то це має сенс імплементувати. Якщо вартість покращення буде вищою за 900$, то вартість покращення буде вищою за інвестицію, відповідно прибуток не збільшиться. Зазвичай, вартість такого покращення буде надзвичайно високою, адже покращення саме на верхній межі є найдорожчими з точки зору ресурсів необхідних на імплементацію.
-
-Так само, розглядаючи ціну моніторингу, варто згадати, що моніторинг вимагає впровадження, розробку, конфігурацію та підтримку додаткових систем. Окрім цього, це створює додаткове когнітивне навантаження на розробників, що займаються розробкою та підтримкою розподіленої системи. Відповідно, необхідно більше ресурсів витрачати на те, аби документувати підходи та навчити розробників користуватись такою моніторинговою системою.
-
-Тим не менше, інвестицію в навчання працівників можна оптимізувати таким чином, аби не витрачати на це час щоразу, коли з'являється новий працівник. Гарним рішенням подібної проблеми може бути уніфікація моніторингової інфраструктури та моніторингових вимог від частин розподіленої системи. У більшості випадків, моніторинг застосовується до різних платформ таких як .NET, Java, Go, тощо.
-Створивши документ, який описує найкращі практики до застосування моніторингових інструментів, з'являється можливість легкого навчання працівників, а також перевикористання цих найкращих практик у частинах розподіленої системи. Це стосується не лише концептуальних підходів, а й вже готових рішень для перевикористання: конфігурацій метрик, списку залежностей, тощо.
-Так само, окрім документації таких підходів, ще варто приділити увагу створенню базового прикладу сервісу, що береться за відправну точку для кожного нового сервісу в розподіленій системі. Такий базовий приклад включає в себе всі найкращі практики, які дозволяють вже бути готовими до використання в production середовищах з першого дня існування. Варто наголосити, що основна причина для такої документації - це оптимізувати використання часу в командах продуктових розробників, аби вони могли більше фокусуватися на продукті, а не на інструментації, моніторингу, чи налаштуванні інфраструктури.
-
-Так само, осмислюючи моніторинг, варто врахувати, що деякий відсоток обчислювальних ресурсів системи буде витрачатись на моніторинг. Відповідно, це буде відображено у загальній продуктивності системи. Деякі розподілені системи можуть сягати тисяч серверів, тому очевидно, що ресурси витрачені на моніторинг та оглядовість таких систем можуть мати великий вплив на продуктивність розподіленої системи. Аби обслуговувати такі розподілені системи, моніторингова система має споживати якомога менше ресурсів, наскільки це можливо, але не менше, аби не спричинити втрати даних або власну недоступність.
-
-Ще один фактор, що є частиною ціни і вартий того, аби його розглянути в даній роботі, це великий та постійно ростучий розмір артефакту, який створений моніторинговою системою. Очевидно, що обсяг даних, що збирається з розподіленої системи, є таким, що важко опрацювати, тому критично важливим є оптимізація таких даних для сприйняття користувачем. Так само, цей масив даних необхідно зберігати. В деяких системах є допустими видаляти такі дані після певного періоду зберігання.
-
-Кілька тез у якості висновку:
-- Надійність та стабільність систем має багато чого спільного з вимірюванням ризиків і прийманням обдуманих рішень. Аби вимірювати ризики, необхідно розуміти систему, продукт, а також вплив на користувачів. Вимірювання ризиків зазвичай є дорогим інструментом саме по собі.
-- Рівень доступності системи має бути підібраний відповідно до того, що бізнес може собі дозволити - з точки зору ціни та впливу помилок на користувачів. Більшість систем не потребують SLA 99.999% та більше.
-
-
-##### превентивна безпека за допомогою моніторингу
 
 The work describes possible negative outcomes for software product and defines what are the problems to be prevented by monitoring:
 - user dissatisfaction with the product
@@ -331,11 +287,18 @@ In this work we focused on modern approaches to monitoring with regards to preve
 
 # Bibliography
 
-1. Mansouri-Samani, Masoud & Sloman, Morris. (1993). Monitoring distributed systems. Network, IEEE. 7. 20 - 30. 10.1109/65.244791.
-
-2. IEEE: Ieee standard glossary of software engineering terminology (1990), https://ieeexplore.ieee.org/document/159342
-
-3. Manzo, M. & Frisiani, Arrigo & Vernazza, T.. (1982). A monitoring distributed system. Microprocessing and Microprogramming. 10. 19–24. 10.1016/0165-6074(82)90118-1. 
-
-4. https://en.wikipedia.org/wiki/Observer_effect_(physics)
-5. Distributed Systems Observability by Cindy Sridharan, https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/ch04.html#:~:text=Logs%2C%20metrics%2C%20and%20traces%20are,the%20three%20pillars%20of%20observability
+1.	Robert Cooper and Keith Marzullo. 1991. Consistent detection of global predicates. SIGPLAN Not. 26, 12 (Dec. 1991), 167–174. DOI:https://doi.org/10.1145/127695.122774
+2.	Mansouri-Samani, Masoud & Sloman, Morris. (1993). Monitoring distributed systems. Network, IEEE. 7. 20 - 30. 10.1109/65.244791.
+3.	IEEE: Ieee standard glossary of software engineering terminology (1990), https://ieeexplore.ieee.org/document/159342
+4.	Manzo, M. & Frisiani, Arrigo & Vernazza, T.. (1982). A monitoring distributed system. Microprocessing and Microprogramming. 10. 19–24. 10.1016/0165-6074(82)90118-1.
+5.	https://en.wikipedia.org/wiki/Observer_effect_(physics)
+6.	Distributed Systems Observability by Cindy Sridharan, https://www.oreilly.com/library/view/distributed-systems-observability/9781492033431/ch04.html#:~:text=Logs%2C%20metrics%2C%20and%20traces%20are,the%20three%20pillars%20of%20observability
+7.	Joyce, Jeffrey & Lomow, Greg & Slind, Konrad & Unger, Brian. (1987). Monitoring Distributed Systems.. ACM Trans. Comput. Syst.. 5. 121-150. 10.1145/13677.22723.
+8.	Johng, H., Kim, D., Hill, T., Chung, L.: Estimating the performance of cloud-based systems using benchmarking and simulation in a complementary manner. In: Intl Conference on Service-Oriented Computing. pp. 576–591. Springer (2018)
+9.	Lin, J., Chen, P., Zheng, Z.: Microscope: Pinpoint performance issues with causal graphs in micro-service environments. In: Service-Oriented Computing. pp. 3–20. Springer International Publishing, Cham (2018)
+10.	Pinal V Chauhan, 2012, Cloud Computing In Distributed System, INTERNATIONAL JOURNAL OF ENGINEERING RESEARCH & TECHNOLOGY (IJERT) Volume 01, Issue 10 (December 2012),
+11.	Mostafa, Menna & Bonakdarpour, Borzoo. (2015). Decentralized Runtime Verification of LTL Specifications in Distributed Systems. 494-503. 10.1109/IPDPS.2015.95.
+12.	Niedermaier, S., Koetter, F., Freymann, A., & Wagner, S. (2019). On Observability and Monitoring of Distributed Systems – An Industry Interview Study. Lecture Notes in Computer Science, 36–52.
+13.	George Coulouris. Distributed Systems: Concepts and Design. Addison-Wesley, 2011
+14.	Deepak Garg, Limin Jia, and Anupam Datta. Policy auditing over incomplete logs: Theory, implementation and applications. In Proc. of CCS’11, pages 151–162, 2011
+15.	Hagit Attiya and Jennifer L. Welch. Distributed computing: fundamentals, simulations and advanced topics. Wiley, 2004
