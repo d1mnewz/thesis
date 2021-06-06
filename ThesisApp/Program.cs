@@ -15,25 +15,20 @@ namespace ThesisApp
                 .WriteTo.Elasticsearch(ConfigureElasticSink())
                 .WriteTo.Console()
                 .CreateLogger();
-
             log.Information("Hello and welcome to the monitoring dotnetcore demo!");
             log.Information(
                 $"We will attempt to mimic a live system's behaviour in terms of warnings and exceptions.{Environment.NewLine}");
             const int milliSecondsToSleep = 500;
-
             SetupRequirements();
-
             //interval settings
             var loop_counter = 0;
             const int warning_interval = 20;
             const int exception_interval = 50;
-
             //scrape counters
             var prom_ok = Metrics.CreateCounter("prom_ok",
                 "This fields indicates the transactions that were processed correctly.");
             var prom_warning = Metrics.CreateCounter("prom_warning", "This fields indicates the warning count.");
             var prom_exception = Metrics.CreateCounter("prom_exception", "This fields indicates the exception count.");
-
             while (true)
             {
                 //main control loop
@@ -51,11 +46,9 @@ namespace ThesisApp
                     log.Information("\nAlarm! call 911 - an exception has occured!\n");
                     loop_counter = 0;
                 }
-
                 loop_counter++;
             }
         }
-
         private static ElasticsearchSinkOptions ConfigureElasticSink()
         {
             var httpLocalhost = "http://localhost:9200";
@@ -65,7 +58,6 @@ namespace ThesisApp
                 IndexFormat = $"dimko-{DateTime.UtcNow:yyyy-MM}"
             };
         }
-
         private static void SetupRequirements()
         {
             var metricServer = new MetricServer(port: 1234);
